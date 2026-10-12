@@ -1,0 +1,299 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Tag from "../../components/Tag.astro";
+import { projects, type Project } from "../../data/projects";
+import { site } from "../../config/site";
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const personalComments = project.personalComments ?? [];
+const hasPersonalComments = personalComments.length > 0;
+---
+
+<BaseLayout
+  title={`${project.title} — ${site.name}`}
+  description={project.shortDescription}
+  image={project.image?.src}
+>
+  <div class="shell article-shell project-detail">
+    <a class="back-link" href="/projects/">
+      ← All projects
+    </a>
+    <header class="article-header">
+      <p class="eyebrow">
+        {project.category}
+        {project.year && ` / ${project.year}`}
+      </p>
+      <h1>{project.title}</h1>
+      <p class="article-dek">{project.shortDescription}</p>
+      {project.technologies.length > 0 && (
+        <div class="tags">
+          {project.technologies.map((tech) => (
+            <Tag label={tech} />
+          ))}
+        </div>
+      )}
+    </header>
+    {project.image && (
+      <figure class="project-cover">
+        <img
+          class:list={[
+            "detail-image",
+            {
+              "detail-image--screenshot":
+                project.links && !project.imageCaption,
+            },
+          ]}
+          src={project.image.src}
+          alt={project.image.alt}
+          width={project.image.width}
+          height={project.image.height}
+          decoding="async"
+        />
+        {(project.imageCaption || project.links) && (
+          <figcaption>
+            {project.imageCaption ?? "Screenshot from the developer’s official site"}
+          </figcaption>
+        )}
+      </figure>
+    )}
+    <div class="prose">
+      <h2>Overview</h2>
+      {project.longDescription.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+      {project.keyConcepts && (
+        <>
+          <h2>Key concepts</h2>
+          <ul>
+            {project.keyConcepts.map((concept) => (
+              <li>{concept}</li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+    {hasPersonalComments && (
+      <section
+        class="project-personal-comments prose project-personal-comments--filled"
+        aria-labelledby="personal-comments-title"
+      >
+        <p class="eyebrow">A note from me</p>
+        <h2 id="personal-comments-title">Personal comments</h2>
+        {personalComments.map((paragraph) => (
+          <p>
+            {paragraph
+              .split(/(`[^`]+`)/g)
+              .map((part) =>
+                part.startsWith("`") && part.endsWith("`") ? (
+                  <code>{part.slice(1, -1)}</code>
+                ) : (
+                  part
+                ),
+              )}
+          </p>
+        ))}
+      </section>
+    )}
+    {project.youtubeVideoId && (
+      <section class="project-video" aria-labelledby="project-video-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Watch</p>
+            <h2 id="project-video-title">Project video</h2>
+          </div>
+        </div>
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${project.youtubeVideoId}`}
+          title={`${project.title} video`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+        <a
+          class="button-text"
+          href={`https://www.youtube.com/watch?v=${project.youtubeVideoId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Watch on YouTube ↗
+        </a>
+      </section>
+    )}
+    {project.jamResults && (
+      <section class="project-results" aria-labelledby="jam-results-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Recognition</p>
+            <h2 id="jam-results-title">Game jam results</h2>
+          </div>
+        </div>
+        <p>
+          {project.jamResults.name} · {project.jamResults.entries} entries ·{" "}
+          {project.jamResults.ratings} ratings for this submission
+        </p>
+        <div class="project-results-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Criterion</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {project.jamResults.rankings.map((result) => (
+                <tr>
+                  <th scope="row">{result.criterion}</th>
+                  <td>#{result.rank}</td>
+                  <td>{result.score.toFixed(3)} / 5</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <a
+          class="button-text"
+          href={project.jamResults.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View full jam results ↗
+        </a>
+      </section>
+    )}
+    {project.commentHighlights && project.commentHighlights.length > 0 && (
+      <section
+        class="project-comments"
+        aria-labelledby="project-comments-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Community feedback</p>
+            <h2 id="project-comments-title">What players said</h2>
+          </div>
+        </div>
+        <div class="project-comments-grid">
+          {project.commentHighlights.map((comment) => (
+            <blockquote>
+              <p>“{comment.quote}”</p>
+              <cite>— {comment.author}</cite>
+            </blockquote>
+          ))}
+        </div>
+        {project.feedbackSummary && (
+          <p class="project-feedback-summary">{project.feedbackSummary}</p>
+        )}
+        {project.jamResults && (
+          <a
+            class="button-text"
+            href={project.jamResults.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read the jam comments ↗
+          </a>
+        )}
+      </section>
+    )}
+    {project.features && project.features.length > 0 && (
+      <section class="project-features" aria-labelledby="features-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Inside the project</p>
+            <h2 id="features-title">Features</h2>
+          </div>
+        </div>
+        <div class="project-feature-grid">
+          {project.features.map((feature) => (
+            <article class="project-feature">
+              <img
+                src={feature.image.src}
+                alt={feature.image.alt}
+                width={feature.image.width}
+                height={feature.image.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+    {project.gallery && project.gallery.length > 0 && (
+      <section class="project-gallery" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Project imagery</p>
+            <h2 id="gallery-title">More visuals</h2>
+          </div>
+        </div>
+        <div class="project-gallery-grid">
+          {project.gallery.map((image) => (
+            <figure>
+              <img
+                class:list={{
+                  "project-gallery-image--portrait": image.height > image.width,
+                  "project-gallery-image--wide": image.width / image.height > 2,
+                }}
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                loading="lazy"
+                decoding="async"
+              />
+              {image.caption && <figcaption>{image.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+    {(project.githubUrl || project.liveUrl || project.links) && (
+      <div class="detail-links">
+        {project.links?.map((link) => (
+          <a
+            class="button-text"
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link.label} ↗
+          </a>
+        ))}
+        {project.githubUrl && (
+          <a
+            class="button-primary"
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View source ↗
+          </a>
+        )}
+        {project.liveUrl && (
+          <a
+            class="button-text"
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit project ↗
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</BaseLayout>

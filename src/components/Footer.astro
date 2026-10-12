@@ -1,0 +1,16 @@
+---
+import { site } from "../config/site";
+---
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <p>
+      © {new Date().getFullYear()} {site.name}. Built with care and Astro.
+    </p>
+    <div>
+      <a href="/rss.xml">RSS</a>
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>

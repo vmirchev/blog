@@ -1,0 +1,28 @@
+---
+import { site } from "../config/site";
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<div class:list={["social-links", { compact }]}>
+  <a
+    href={site.github}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`${site.name} on GitHub`}
+  >
+    GitHub <span aria-hidden="true">↗</span>
+  </a>
+  {site.linkedin && (
+    <a
+      href={site.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${site.name} on LinkedIn`}
+    >
+      LinkedIn <span aria-hidden="true">↗</span>
+    </a>
+  )}
+</div>

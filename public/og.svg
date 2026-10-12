@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#102020"/>
+  <path d="M0 512H1200M0 392H1200M0 272H1200M0 152H1200M160 0V630M400 0V630M640 0V630M880 0V630M1120 0V630" stroke="#365b4e" opacity=".35"/>
+  <circle cx="1045" cy="122" r="116" fill="#315246" opacity=".65"/>
+  <circle cx="1115" cy="540" r="170" fill="#673e32" opacity=".55"/>
+  <rect x="70" y="70" width="170" height="42" fill="#b9e6c6"/>
+  <text x="88" y="98" fill="#102020" font-family="Arial, sans-serif" font-size="18" font-weight="bold" letter-spacing="2">PORTFOLIO</text>
+  <text x="70" y="235" fill="#f4f6ef" font-family="Arial, sans-serif" font-size="79" font-weight="bold">Software Engineering</text>
+  <text x="70" y="335" fill="#b9e6c6" font-family="Arial, sans-serif" font-size="55" font-weight="bold">Machine Learning</text>
+  <text x="70" y="402" fill="#ffd0a8" font-family="Arial, sans-serif" font-size="55" font-weight="bold">&amp; Game Development</text>
+  <text x="70" y="550" fill="#b6cdc0" font-family="Arial, sans-serif" font-size="25">Understand the mechanics · Measure what matters · Create</text>
+</svg>

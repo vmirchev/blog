@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getPublishedPosts } from "../../lib/blog";
+import { site } from "../../config/site";
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title={`Writing — ${site.name}`}
+  description="Notes on software engineering, systems design, and machine learning."
+>
+  <div class="shell page-shell">
+    <div class="page-intro">
+      <p class="eyebrow">Writing / Field notes</p>
+      <h1>Ideas worth writing down.</h1>
+      <p>
+        Practical notes from building software, thinking through systems, and
+        learning how to make ML work outside a notebook.
+      </p>
+    </div>
+    <div class="blog-list blog-index">
+      {posts.map((post) => (
+        <BlogCard post={post} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

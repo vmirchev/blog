@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout
+  title={`About — ${site.name}`}
+  description="About my approach to software engineering, mobile products, distributed systems, and machine learning."
+>
+  <div class="shell page-shell">
+    <div class="page-intro">
+      <p class="eyebrow">About / The person behind the work</p>
+      <h1>Curious about the whole system.</h1>
+      <p>
+        I’m a software engineer interested in what happens when good ideas meet
+        real constraints: users, reliability, performance, and the work of
+        keeping things running.
+      </p>
+    </div>
+    <div class="about-grid">
+      <div class="prose">
+        <h2>How I work</h2>
+        <p>
+          I like projects where product thinking and technical depth reinforce
+          each other. That might mean shaping an intuitive mobile experience,
+          untangling an API boundary, or making an ML workflow repeatable enough
+          to trust.
+        </p>
+        <p>
+          I value clear communication, small feedback loops, and solutions that
+          a team can understand after the first version ships.
+        </p>
+        <h2>Current focus</h2>
+        <p>
+          These days I’m especially interested in production machine learning:
+          data quality, evaluation, model serving, and the infrastructure around
+          useful predictions.
+        </p>
+        <p>
+          I bring more than 15 years of production software experience from
+          games and mobile products to this work, with the same attention to
+          performance, reliability, and user feedback.
+        </p>
+        <h2>Education</h2>
+        <p>
+          I have a master’s degree in Software Technologies from Sofia
+          University. My thesis focused on developing a conference management
+          system, which later evolved into a deployed project for the Balkan
+          Journal of Philosophy.
+        </p>
+        <p>
+          I don’t see the degree itself as a direct measure of professional
+          success, but it gave me several things I value. It taught me to write
+          more clearly, encouraged me to explore ideas beyond my immediate
+          field, and broadened my interests and perspective. It also gave me
+          the opportunity to work with younger talent, which I found
+          surprisingly refreshing.
+        </p>
+        <h2>A Nice Surprise</h2>
+        <p>
+          I just Googled myself and found something really cool: my high school
+          is still hosting my personal website from 2010.
+        </p>
+        <p>
+          It’s a small piece of my early development history that I had
+          completely forgotten about. Pretty awesome to find it still online
+          after all these years.
+        </p>
+        <p>
+          <a
+            href="https://2els.com/investicia-v-badeshteto/clubwd/portfolios/vmirchev/index.html"
+          >
+            View the website ↗
+          </a>
+        </p>
+      </div>
+      <aside class="about-aside">
+        <p class="eyebrow">Areas of practice</p>
+        <ul>
+          <li>Software Engineering</li>
+          <li>Mobile Development</li>
+          <li>Game Development</li>
+          <li>Backend / Distributed Systems</li>
+          <li>Machine Learning</li>
+          <li>ML Engineering Projects</li>
+        </ul>
+        <p class="eyebrow">Elsewhere</p>
+        <SocialLinks />
+        <a class="aside-email" href={`mailto:${site.email}`}>
+          {site.email} ↗
+        </a>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

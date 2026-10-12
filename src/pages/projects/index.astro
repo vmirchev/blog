@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects } from "../../data/projects";
+import { site } from "../../config/site";
+const sections = [
+  {
+    title: "Machine Learning",
+    slugs: [
+      "flower-image-classification",
+      "ieee-cis-fraud-detection",
+      "ml-from-scratch",
+    ],
+  },
+  { title: "Mobile Development", slugs: ["vng-tg", "outwalk", "cardiograph"] },
+  {
+    title: "Game Development",
+    slugs: [
+      "candy-champions",
+      "diamonds-are-forever",
+      "cosmo-run",
+      "jump-drive",
+      "train-merger",
+    ],
+  },
+  {
+    title: "Web Development",
+    slugs: ["balkan-journal-of-philosophy", "vmstudio", "keytex-bg"],
+  },
+];
+const projectBySlug = new Map(
+  projects.map((project) => [project.slug, project]),
+);
+---
+
+<BaseLayout
+  title={`Projects — ${site.name}`}
+  description="Projects in machine learning, mobile, game, and web development."
+>
+  <div class="shell page-shell">
+    <div class="page-intro">
+      <p class="eyebrow">Work / Selected projects</p>
+      <h1>Things I’ve built and explored.</h1>
+      <p>
+        These are selected projects I’ve worked on over the years, spanning
+        entertainment games, applications used in medicine, backend systems,
+        and modern machine learning projects. With technology evolving so
+        quickly, I’m excited to keep exploring new challenges and opportunities.
+      </p>
+    </div>
+    {sections.map((section) => (
+      <section
+        class="project-category"
+        aria-labelledby={`category-${section.slugs[0]}`}
+      >
+        <h2 id={`category-${section.slugs[0]}`}>{section.title}</h2>
+        <div class="card-grid projects-grid">
+          {section.slugs.map((slug) => {
+            const project = projectBySlug.get(slug);
+            return project && <ProjectCard project={project} />;
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

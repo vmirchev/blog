@@ -1,0 +1,361 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { projects, type Project } from "../data/projects";
+import { getPublishedPosts } from "../lib/blog";
+import { site } from "../config/site";
+import "../styles/home.css";
+
+const posts = (await getPublishedPosts()).slice(0, 3);
+const projectBySlug = new Map(
+  projects.map((project) => [project.slug, project]),
+);
+const pickProjects = (slugs: string[]): Project[] =>
+  slugs
+    .map((slug) => projectBySlug.get(slug))
+    .filter((project): project is Project => project !== undefined);
+const mlProjects = pickProjects([
+  "flower-image-classification",
+  "ml-from-scratch",
+  "ieee-cis-fraud-detection",
+]);
+const productionProjects = pickProjects([
+  "candy-champions",
+  "outwalk",
+  "balkan-journal-of-philosophy",
+]);
+const skillGroups = [
+  {
+    title: "Machine Learning",
+    skills: [
+      "PyTorch",
+      "NumPy",
+      "Classification",
+      "Model evaluation",
+      "Gradient boosting",
+    ],
+  },
+  {
+    title: "ML Engineering",
+    skills: ["FastAPI", "Docker", "Kedro", "Training & inference pipelines"],
+  },
+  {
+    title: "Backend / Systems",
+    skills: ["Python", "API design", "System design"],
+  },
+  {
+    title: "Production Engineering",
+    skills: [
+      "Unity",
+      "Mobile applications",
+      "Performance optimization",
+      "User feedback",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${site.name} — Software Engineer & Machine Learning`}
+  description={`${site.name} is a software engineer with 15+ years of production development experience, currently focused on machine learning engineering and end-to-end ML systems.`}
+  image="/images/ml-from-scratch-cover.webp"
+>
+  <div class="shell home-shell">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-hero-copy">
+        <div class="home-disciplines">
+          <span>
+            Software engineering <small>15+ years in production</small>
+          </span>
+          <span>
+            Machine learning <small>Current focus</small>
+          </span>
+        </div>
+        <h1 id="home-title">
+          Software Engineer building <em>machine learning systems.</em>
+        </h1>
+        <p class="home-hero-experience">
+          15+ years of production development experience.
+        </p>
+        <p class="home-hero-intro">
+          Software engineer with a background in game development, mobile
+          applications, and backend systems, now focused on machine learning
+          engineering. I build end-to-end ML projects spanning data preparation,
+          training, evaluation, and model serving.
+        </p>
+        <p class="home-hero-proof">
+          15+ years engineering <span aria-hidden="true">·</span> Production
+          games &amp; mobile apps <span aria-hidden="true">·</span> Python{" "}
+          <span aria-hidden="true">·</span> PyTorch{" "}
+          <span aria-hidden="true">·</span> FastAPI{" "}
+          <span aria-hidden="true">·</span> Docker
+        </p>
+        <div class="home-hero-actions">
+          <a class="button-primary" href="#machine-learning">
+            View ML Projects <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            class="home-hero-secondary"
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="home-hero-art">
+        <p class="home-hero-note home-hero-note-light" aria-hidden="true">
+          Game Dev <span>is Fun</span>
+        </p>
+        <p class="home-hero-note home-hero-note-dark" aria-hidden="true">
+          But ML <span>is better</span>
+        </p>
+        <svg
+          class="home-hero-gamepad"
+          viewBox="0 0 100 72"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M25 20h50c8 0 13 5 15 14l6 24c2 8-3 13-10 10L66 55H34L14 68C7 71 2 66 4 58l6-24c2-9 7-14 15-14Z"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path
+            d="M27 31v17m-8-8h16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="68" cy="34" r="3" fill="currentColor" />
+          <circle cx="77" cy="43" r="3" fill="currentColor" />
+        </svg>
+        <svg
+          class="home-hero-idea"
+          viewBox="0 0 48 64"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M15 43c0-5-8-9-8-19a17 17 0 0 1 34 0c0 10-8 14-8 19H15Zm1 6h16m-14 6h12m-9 5h6M24 3V0M3 10 0 7m45 3 3-3M2 30H0m48 0h-2"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <div class="home-hero-orbit home-hero-orbit-ml" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none">
+            <path
+              d="M49 13 21 37l9 37 40 4 13-37-34-28ZM21 37l49 41M49 13 30 74m53-33-62-4m62 4L30 74"
+              stroke="currentColor"
+              stroke-width="1.3"
+            />
+            <circle cx="49" cy="13" r="4" fill="currentColor" />
+            <circle cx="21" cy="37" r="4" fill="currentColor" />
+            <circle cx="30" cy="74" r="4" fill="currentColor" />
+            <circle cx="70" cy="78" r="4" fill="currentColor" />
+            <circle cx="83" cy="41" r="4" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="home-hero-orbit home-hero-orbit-code" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <img
+          class="home-hero-mascot"
+          src="/images/ninja-coding.webp"
+          alt="A hooded ninja coding on a laptop"
+          width="1312"
+          height="1199"
+          fetchpriority="high"
+        />
+      </div>
+    </section>
+
+    <Section
+      id="machine-learning"
+      eyebrow="Current focus / Machine Learning"
+      title="Selected Machine Learning Projects"
+      linkHref="/projects/"
+      linkLabel="All projects"
+    >
+      <p class="home-section-intro">
+        Practical work across model development, evaluation, and inference —
+        from image classification to neural networks and fraud detection.
+      </p>
+      <div class="card-grid home-project-grid home-ml-grid">
+        {mlProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </Section>
+
+    <section
+      class="home-experience"
+      id="experience"
+      aria-labelledby="experience-title"
+    >
+      <div class="home-experience-copy">
+        <p class="eyebrow">Engineering background</p>
+        <h2 id="experience-title">15+ years building production software.</h2>
+        <p>
+          My background spans games, mobile products, and backend systems. I
+          bring that production mindset to ML: reliability,
+          performance, iteration, and user feedback matter alongside model
+          quality.
+        </p>
+      </div>
+      <dl class="home-experience-facts">
+        <div>
+          <dt>6+ years</dt>
+          <dd>Full-time game development</dd>
+        </div>
+        <div>
+          <dt>Shipped products</dt>
+          <dd>Games, mobile apps &amp; backend systems</dd>
+        </div>
+        <div>
+          <dt>Current focus</dt>
+          <dd>Machine learning engineering</dd>
+        </div>
+        <div>
+          <dt>Technical focus</dt>
+          <dd>ML systems · backend · distributed systems</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="home-principles" aria-labelledby="principles-title">
+      <div>
+        <p class="eyebrow">From model to system</p>
+        <h2 id="principles-title">How I approach ML engineering</h2>
+      </div>
+      <div class="home-principles-grid">
+        <div>
+          <span>01 / Understand</span>
+          <h3>Understand the model.</h3>
+          <p>
+            Implement fundamentals and reason about how a model learns instead
+            of treating it as a black box.
+          </p>
+        </div>
+        <div>
+          <span>02 / Evaluate</span>
+          <h3>Measure what matters.</h3>
+          <p>
+            Choose metrics for the problem, examine thresholds, and inspect
+            errors beyond a single headline score.
+          </p>
+        </div>
+        <div>
+          <span>03 / Ship</span>
+          <h3>Build beyond the notebook.</h3>
+          <p>
+            Structure training and inference workflows, then expose models
+            through APIs and containers where the project calls for them.
+          </p>
+        </div>
+        <div>
+          <span>04 / Improve</span>
+          <h3>Close the feedback loop.</h3>
+          <p>
+            Use validation errors and user feedback from shipped products to
+            decide what to improve in the next iteration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <Section
+      id="game-development"
+      eyebrow="Production engineering background"
+      title="Years of shipping software before ML."
+      linkHref="/projects/"
+      linkLabel="More projects"
+    >
+      <p class="home-section-intro">
+        More than a decade building games, mobile apps, and web systems taught
+        me to work with performance, reliability, iteration, user feedback, and
+        real production constraints. That experience shapes how I build ML
+        systems.
+      </p>
+      <div class="card-grid home-project-grid home-production-grid">
+        {productionProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </Section>
+
+    <section class="home-skills content-section" aria-labelledby="skills-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Tools &amp; practice</p>
+          <h2 id="skills-title">Technical skills</h2>
+        </div>
+      </div>
+      <div class="home-skills-grid">
+        {skillGroups.map((group) => (
+          <div class="home-skill-group">
+            <h3>{group.title}</h3>
+            <p>{group.skills.join(" · ")}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <Section
+      eyebrow="Notes from the work"
+      title="Technical Writing"
+      linkHref="/blog/"
+      linkLabel="All writing"
+    >
+      <div class="blog-list">
+        {posts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    </Section>
+
+    <section class="home-endcap" aria-labelledby="endcap-title">
+      <div>
+        <p class="eyebrow">Open to the next challenge</p>
+        <h2 id="endcap-title">
+          Interested in ML / ML Engineering opportunities.
+        </h2>
+        <p>
+          I’m looking for roles where I can combine machine learning with my
+          production software engineering background.
+        </p>
+      </div>
+      <div class="home-endcap-actions">
+        <a
+          class="button-primary"
+          href={site.github}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View GitHub <span aria-hidden="true">↗</span>
+        </a>
+        {site.linkedin && (
+          <a
+            class="home-email-link"
+            href={site.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn ↗
+          </a>
+        )}
+        <a class="home-email-link" href={`mailto:${site.email}`}>
+          Email me ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

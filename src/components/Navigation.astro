@@ -1,0 +1,39 @@
+---
+import { site } from "../config/site";
+const path = Astro.url.pathname;
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/about/", label: "About" },
+];
+---
+
+<nav class="nav" aria-label="Main navigation">
+  {links.map(({ href, label }) => (
+    <a
+      href={href}
+      aria-current={
+        href === "/"
+          ? path === "/"
+            ? "page"
+            : undefined
+          : path.startsWith(href)
+            ? "page"
+            : undefined
+      }
+    >
+      {label}
+    </a>
+  ))}
+  <span class="nav-divider" aria-hidden="true"></span>
+  <a href={site.github} target="_blank" rel="noopener noreferrer">
+    GitHub <span aria-hidden="true">↗</span>
+  </a>
+  {site.linkedin && (
+    <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+      LinkedIn <span aria-hidden="true">↗</span>
+    </a>
+  )}
+</nav>

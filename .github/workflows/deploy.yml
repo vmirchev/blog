@@ -1,0 +1,117 @@
+name: Build and deploy
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Configure Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Validate Astro project
+      - name: Check project
+        run: npm run check
+
+      # Ensure production identity is configured
+      - name: Validate production identity
+        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+        env:
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+          SITE_EMAIL: ${{ secrets.SITE_EMAIL }}
+        run: |
+          test -n "$SITE_NAME"
+          test -n "$SITE_EMAIL"
+
+      # Generate static website
+      - name: Build Astro site
+        env:
+          SITE_NAME: ${{ (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch) && secrets.SITE_NAME || 'Portfolio Owner' }}
+          SITE_EMAIL: ${{ (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch) && secrets.SITE_EMAIL || 'hello@example.invalid' }}
+        run: npm run build
+
+      # Save build output in GitHub Actions
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-dist
+          path: dist/
+          if-no-files-found: error
+
+      # Install SFTP client for production deployments
+      - name: Install SFTP client
+        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      # Deploy production website
+      - name: Deploy to Jump.bg
+        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          SSH_HOST: ${{ secrets.SFTP_HOST }}
+          SSH_PORT: ${{ secrets.SFTP_PORT }}
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+
+          # Validate deployment configuration
+          test -n "$SSH_USER"
+          test -n "$SSH_PRIVATE_KEY"
+          test -n "$SSH_KNOWN_HOSTS"
+          test -n "$SSH_HOST"
+          test -n "$SSH_PORT"
+          test -n "$REMOTE_PATH"
+
+          # Validate connection parameters
+          [[ "$SSH_HOST" =~ ^[a-zA-Z0-9.-]+$ ]]
+          [[ "$SSH_USER" =~ ^[a-zA-Z0-9._-]+$ ]]
+          [[ "$SSH_PORT" =~ ^[0-9]+$ ]]
+          [[ "$REMOTE_PATH" =~ ^[a-zA-Z0-9_./-]+$ ]]
+          [[ "$REMOTE_PATH" != *".."* ]]
+
+          # Configure SSH authentication
+          install -m 700 -d "$HOME/.ssh"
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+
+          chmod 600 "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+          # Upload generated Astro files using SFTP
+          lftp -u "$SSH_USER," "sftp://$SSH_HOST:$SSH_PORT" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 2
+          set net:timeout 20
+          set sftp:connect-program "ssh -a -x -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          cd "$REMOTE_PATH"
+          mirror --reverse --verbose --no-perms ./dist/ .
+          bye
+          EOF
