@@ -627,6 +627,55 @@ img {
   grid-template-columns: minmax(0, 1fr) 290px;
   gap: clamp(3rem, 10vw, 9rem);
 }
+.prose .work-list,
+.prose .education-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.work-list li,
+.education-list li {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 1.3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+.work-date,
+.education-date {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+.prose .work-list h3,
+.prose .education-list h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.3rem;
+  letter-spacing: -0.025em;
+}
+.work-list .work-company,
+.education-list .education-degree {
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 650;
+  margin-bottom: 0.35rem;
+}
+.work-list .work-detail,
+.education-list .education-detail {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin: 0.45rem 0 0;
+}
+.prose .work-projects {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  margin: 0.8rem 0 0;
+}
 .about-aside {
   align-self: start;
   border-top: 2px solid var(--accent);
@@ -1091,6 +1140,11 @@ img {
   .experience-panel,
   .about-grid {
     grid-template-columns: 1fr;
+  }
+  .work-list li,
+  .education-list li {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
   }
   .expertise-grid {
     gap: 2rem;
