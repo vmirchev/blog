@@ -12,6 +12,7 @@ export interface ProjectImage {
   width: number;
   height: number;
   caption?: string;
+  fit?: "contain";
 }
 
 export interface ProjectFeature {
@@ -33,6 +34,7 @@ export interface Project {
   slug: string;
   shortDescription: string;
   longDescription: string[];
+  overviewLink?: { intro: string; label: string; url: string };
   personalComments?: string[];
   keyConcepts?: string[];
   technologies: string[];
@@ -48,6 +50,7 @@ export interface Project {
   jamResults?: JamResults;
   commentHighlights?: { author: string; quote: string }[];
   feedbackSummary?: string;
+  storyLinks?: { title: string; url?: string; status?: string }[];
   featured: boolean;
   year?: number | string;
 }
@@ -55,14 +58,41 @@ export interface Project {
 // These are editable examples. Replace descriptions and links with verified project details.
 export const projects: Project[] = [
   {
-    title: "Flower Image Classification Platform",
+    title: "PetalPaws",
     slug: "flower-image-classification",
     year: 2026,
     shortDescription:
-      "Image classification workflow covering data preparation, training, evaluation, and a FastAPI inference interface.",
+      "Inspired by my cat Misho, I’m building a flower classifier to help others recognize potentially dangerous plants before their pets are harmed.",
     longDescription: [
-      "A reference project for turning an image classifier into a usable product. The workflow covers dataset curation, training, evaluation, and an inference interface.",
+      "The idea began after my cat Misho became sick from drinking water beneath a lily pot. I want to help other pet owners recognize dangerous plants before their pets have the same experience.",
       "The engineering focus is repeatable data preparation, meaningful evaluation, and a clear handoff between model training and inference.",
+    ],
+    overviewLink: {
+      intro: "The original 16-class prototype is available as a",
+      label: "Gradio demo on Hugging Face",
+      url: "https://huggingface.co/spaces/vmmirchev/oxford-flowers-16-classifier",
+    },
+    storyLinks: [
+      {
+        title: "What 95% Accuracy Didn’t Tell Me About My Flower Classifier",
+        url: "/blog/what-95-percent-accuracy-didnt-tell-me-about-my-flower-classifier/",
+      },
+      {
+        title: "My Model Was 99% Confident. And Wrong.",
+        url: "/blog/my-model-was-99-percent-confident-and-wrong/",
+      },
+      {
+        title: "Data Collection",
+        status: "Done; blog post coming soon",
+      },
+      {
+        title: "Building a system around the model",
+        status: "In progress",
+      },
+      {
+        title: "Mobile application for a client",
+        status: "In progress",
+      },
     ],
     personalComments: [
       "The project is in progress and will be released in Q4 2026. Details coming soon.",
@@ -77,12 +107,28 @@ export const projects: Project[] = [
     },
     gallery: [
       {
-        src: "/images/flower-detail.webp",
-        alt: "Illustrative close-up of a pale pink flower",
-        width: 1200,
-        height: 800,
-        caption:
-          "A closer look at the kind of visual input this project explores.",
+        src: "/images/cozy-pytorch-ninja-coding-den.png",
+        alt: "Illustration of a PyTorch coding scene with a cat and lilies",
+        width: 1448,
+        height: 1086,
+        caption: "The project began with PyTorch and a question inspired by Misho.",
+        fit: "contain",
+      },
+      {
+        src: "/images/rose-grad-cam.png",
+        alt: "Rose photo beside a Grad-CAM heatmap for the rose prediction",
+        width: 1764,
+        height: 904,
+        caption: "Grad-CAM highlights regions associated with a rose prediction.",
+        fit: "contain",
+      },
+      {
+        src: "/images/hippeastrum-rose-mistake-grad-cam-result.png",
+        alt: "Hippeastrum image beside Grad-CAM heatmaps for rose and Hippeastrum scores",
+        width: 2576,
+        height: 888,
+        caption: "Investigating a Hippeastrum the model misclassified as a rose.",
+        fit: "contain",
       },
     ],
     featured: true,
@@ -129,7 +175,7 @@ export const projects: Project[] = [
   {
     title: "IEEE-CIS Fraud Detection",
     slug: "ieee-cis-fraud-detection",
-    year: 2025,
+    year: 2026,
     shortDescription:
       "Imbalanced fraud classification with missing-data analysis, metric selection, gradient boosting, and Optuna tuning.",
     longDescription: [

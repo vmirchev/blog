@@ -999,7 +999,8 @@ img {
   aspect-ratio: auto;
   object-fit: contain;
 }
-.project-gallery img.project-gallery-image--wide {
+.project-gallery img.project-gallery-image--wide,
+.project-gallery img.project-gallery-image--contain {
   aspect-ratio: auto;
   object-fit: contain;
 }
