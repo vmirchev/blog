@@ -33,6 +33,12 @@ const hasPersonalComments = personalComments.length > 0;
       </p>
       <h1>{project.title}</h1>
       <p class="article-dek">{project.shortDescription}</p>
+      {(project.role || project.projectDates) && (
+        <p class="article-dates">
+          {project.role && <span>{project.role}</span>}
+          {project.projectDates && <span>{project.projectDates}</span>}
+        </p>
+      )}
       {project.technologies.length > 0 && (
         <div class="tags">
           {project.technologies.map((tech) => (
@@ -92,6 +98,32 @@ const hasPersonalComments = personalComments.length > 0;
         </>
       )}
     </div>
+    {project.contribution && project.contribution.length > 0 && (
+      <section class="prose" aria-labelledby="project-contribution-title">
+        <h2 id="project-contribution-title">My contribution</h2>
+        {project.contribution.map((paragraph) => (
+          <p>
+            {paragraph
+              .split(/(\*\*[^*]+\*\*)/g)
+              .map((part) =>
+                part.startsWith("**") && part.endsWith("**") ? (
+                  <strong>{part.slice(2, -2)}</strong>
+                ) : (
+                  part
+                ),
+              )}
+          </p>
+        ))}
+      </section>
+    )}
+    {project.technicalChallenges && project.technicalChallenges.length > 0 && (
+      <section class="prose" aria-labelledby="project-challenges-title">
+        <h2 id="project-challenges-title">Technical challenges</h2>
+        {project.technicalChallenges.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </section>
+    )}
     {project.storyLinks && project.storyLinks.length > 0 && (
       <section class="prose" aria-labelledby="project-story-title">
         <h2 id="project-story-title">Follow the story</h2>
@@ -287,39 +319,55 @@ const hasPersonalComments = personalComments.length > 0;
         </div>
       </section>
     )}
-    {(project.githubUrl || project.liveUrl || project.links) && (
-      <div class="detail-links">
-        {project.links?.map((link) => (
-          <a
-            class="button-text"
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {link.label} ↗
-          </a>
-        ))}
-        {project.githubUrl && (
-          <a
-            class="button-primary"
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View source ↗
-          </a>
+    {(project.results ||
+      project.githubUrl ||
+      project.liveUrl ||
+      project.links) && (
+      <section
+        class:list={{ prose: project.results }}
+        aria-labelledby={project.results ? "project-result-title" : undefined}
+      >
+        {project.results && (
+          <>
+            <h2 id="project-result-title">Result and links</h2>
+            {project.results.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </>
         )}
-        {project.liveUrl && (
-          <a
-            class="button-text"
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visit project ↗
-          </a>
-        )}
-      </div>
+        <div class="detail-links">
+          {project.links?.map((link) => (
+            <a
+              class="button-text"
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+          {project.githubUrl && (
+            <a
+              class="button-primary"
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View source ↗
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              class="button-text"
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit project ↗
+            </a>
+          )}
+        </div>
+      </section>
     )}
   </div>
 </BaseLayout>

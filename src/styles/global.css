@@ -801,6 +801,15 @@ img {
   max-width: 100%;
   height: auto;
 }
+.prose .article-figure {
+  margin: 1.6rem 0;
+}
+.prose .article-figure figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
 .article-pagination {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1218,4 +1227,10 @@ img {
 }
 .contact-panel .eyebrow {
   color: var(--background);
+}
+/* Show the full Volume Glance artwork in the shared project image frames. */
+.project-image[src="/images/volume-glance-promo.png"],
+.detail-image[src="/images/volume-glance-promo.png"] {
+  object-fit: contain;
+  background: #06243c;
 }

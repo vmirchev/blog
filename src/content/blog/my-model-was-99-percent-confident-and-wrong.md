@@ -62,9 +62,10 @@ A few interesting patterns emerged.
 
 Sometimes the model seemed to associate features in the background with particular flower classes.
 
-![Bougainvillea photo and Grad-CAM views showing the model's petunia and bougainvillea scores, with attention on parts of the surroundings](/images/bougainvillea-env-example.png)
-
-*Original bougainvillea photo: <a href="https://guzmansgreenhouse.com/bougainvillea-flowering-plant/" target="_blank" rel="nofollow noopener noreferrer">Guzman’s Garden Centers</a>. No images outside the Oxford 102 Flowers dataset were used for training or the formal test set; this outside image was used only for this example.*
+<figure class="article-figure">
+  <img src="/images/bougainvillea-env-example.png" alt="Bougainvillea photo and Grad-CAM views showing the model's petunia and bougainvillea scores, with attention on parts of the surroundings" />
+  <figcaption>Original bougainvillea photo: <a href="https://guzmansgreenhouse.com/bougainvillea-flowering-plant/" target="_blank" rel="nofollow noopener noreferrer">Guzman’s Garden Centers</a>. No images outside the Oxford 102 Flowers dataset were used for training or the formal test set; this outside image was used only for this example.</figcaption>
+</figure>
 
 Another problem appeared when multiple flowers were present in a single image.
 

@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # local copy of the detailed project notes
 README.local.md
+
+# local template for app project pages
+PROJECT_PAGE_STRUCTURE.md

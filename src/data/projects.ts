@@ -34,6 +34,11 @@ export interface Project {
   slug: string;
   shortDescription: string;
   longDescription: string[];
+  role?: string;
+  projectDates?: string;
+  contribution?: string[];
+  technicalChallenges?: string[];
+  results?: string[];
   overviewLink?: { intro: string; label: string; url: string };
   personalComments?: string[];
   keyConcepts?: string[];
@@ -57,6 +62,73 @@ export interface Project {
 
 // These are editable examples. Replace descriptions and links with verified project details.
 export const projects: Project[] = [
+  {
+    title: "Volume Glance",
+    slug: "volume-glance",
+    year: 2026,
+    shortDescription:
+      "An Android app that shows Media and Ring volume together in a temporary popup, with quick presets and home-screen widgets.",
+    role: "Independent designer and developer",
+    projectDates: "2026–present",
+    longDescription: [
+      "Volume Glance is an independent Android app I designed and developed after running into a frustrating problem with Android's volume controls: it was too easy to adjust Media volume while leaving Ring volume unnoticed.",
+      "I wanted a simple way to see both levels whenever I pressed the hardware volume buttons, without interrupting what I was doing. The temporary popup can show Media and Ring over other apps when optional background monitoring is enabled. The app also offers sound presets and home-screen widgets for quick changes.",
+      "What started as a small utility grew into a complete app with a customizable popup and an optional Pro upgrade. The popup requires Android's Display over other apps permission.",
+    ],
+    contribution: [
+      "I handled the entire development process, from the initial implementation and interface design to testing, onboarding, Google Play preparation, and gathering user feedback.",
+      "I built background monitoring, the popup, sound presets, home-screen widgets, and the optional Pro features. Based on closed-testing feedback, I added direct volume adjustments from the popup and more customization options.",
+      "During closed testing, testers found that background monitoring could stop after app updates, Pro feature restrictions were confusing, and the initial setup was difficult. I fixed the monitoring issue and improved onboarding based on their feedback.",
+    ],
+    personalComments: [
+      "I built Volume Glance after missing an important call because I had raised Media volume instead of Ring. Later, a ringtone woke our baby. Both experiences made me want a quick way to see the two levels together.",
+      "The challenge was making that check available wherever I was on the phone, without turning it into another screen I had to open. The popup is brief, while presets and widgets make common volume changes just as quick.",
+      "Building Volume Glance has been an opportunity to make decisions not just as a developer, but as someone responsible for the whole product experience, including usability, reliability, and distribution.",
+    ],
+    results: [
+      "The app is currently in a 14-day closed testing period, so the Google Play listing is available to testers rather than the public. The core app is free, with no ads or subscription. An optional one-time Pro upgrade adds popup customization, including position, size, duration, opacity, and the volume streams shown.",
+      "I chose not to include advertising, analytics, or tracking to keep the app simple and respect user privacy.",
+    ],
+    technologies: ["Android", "Kotlin"],
+    category: "Mobile Development",
+    image: {
+      src: "/images/volume-glance-promo.png",
+      alt: "Volume Glance app icon beside a phone showing Media and Ring volume sliders",
+      width: 1774,
+      height: 887,
+    },
+    imageCaption:
+      "Illustrative promotional artwork; the gallery below shows app screenshots.",
+    gallery: [
+      {
+        src: "/images/volume-glance-popup-and-widgets.png",
+        alt: "Volume Glance popup showing Media and Ring volume above preset widgets",
+        width: 1080,
+        height: 2400,
+        caption:
+          "The popup shows Media and Ring together; preset widgets sit on the home screen.",
+      },
+      {
+        src: "/images/volume-glance-home-screen.png",
+        alt: "Volume Glance home screen with sound levels, monitoring, and quick presets",
+        width: 1080,
+        height: 2400,
+        caption:
+          "The app's home screen shows the current levels and quick sound presets.",
+      },
+    ],
+    links: [
+      {
+        label: "Volume Glance on Google Play (testing)",
+        url: "https://play.google.com/store/apps/details?id=com.vmirchev.volumeinspector",
+      },
+      {
+        label: "Privacy policy",
+        url: "https://vmirchev.com/vg-privacy-policy.html",
+      },
+    ],
+    featured: false,
+  },
   {
     title: "PetalPaws",
     slug: "flower-image-classification",
@@ -205,10 +277,14 @@ export const projects: Project[] = [
     year: "2015–2018",
     shortDescription:
       "A data-driven activity app turning steps and distance into social leaderboards, weekly reports, challenges, and badges.",
+    role: "Team lead, iOS and backend developer",
     longDescription: [
       "Outwalk is a data-driven activity app that tracks steps and distance while walking, running, or jogging. It turns that activity into daily, weekly, and monthly leaderboards, personalized reports, challenges, and nearly 100 unlockable badges.",
-      "Available on iOS and Android with companion watch experiences, it also includes automatic tracking, chat, a timeline built from activity data, and location-based comparisons between users.",
-      "My role centered on backend development and mentoring teammates across iOS, Android, design, and QA.",
+      "Built for iOS and Android with companion watch experiences, it also includes automatic tracking, chat, a timeline built from activity data, and location-based comparisons between users. The idea was to make activity more engaging through friends, shared goals, and friendly competition.",
+    ],
+    contribution: [
+      "I led the Outwalk team, built the backend, and was one of the two iOS developers. I worked with two Android developers, the other iOS developer, several UI/UX designers, and a QA engineer.",
+      "Alongside writing code, I spent considerable time mentoring the other developers and coordinating work across the team as we built an app that combined activity tracking with social features, leaderboards, challenges, and personalized reports.",
     ],
     personalComments: [
       "Outwalk was built before modern activity-tracking apps became as common as they are today. At its core, it was a social network with a simple idea: make people more active by letting them compare their step count and distance with others.",
@@ -216,10 +292,13 @@ export const projects: Project[] = [
       "Even in the early prototypes we shared with friends and family, we saw a huge increase in their daily activity. Some of them became so determined to take first place in the weekly ranking that they would spend their Sunday evenings walking for hours just to increase their step count.",
       "We added everything we could think of: leaderboards for different periods — day, week, and month — custom-made badges for daily steps and total distance, challenges, chats, a timeline with data-based information, and location-based comparisons between users.",
       "But somewhere along the way, we got lost in the details, and development went on for much longer than it should have. We thought that because we had a working proof of concept, if we just built everything properly, success would follow. Meanwhile, bigger competitors moved faster, captured a larger share of the market, learned from their users' feedback, and kept improving.",
-      "During the project, I worked with and mentored a team that included two Android developers, two iOS developers, three different UI/UX designers, a QA engineer, and me working on the backend. It was quite a handful.",
       "I learned a lot from Outwalk, but two lessons stand out.",
       "First, adding more features doesn't always make a product better — something that later became very useful to me in game development.",
       "Second, when you're building something with a small team, release an MVP and listen to your users. Iterate often. Don't spend years building a massive application without real user interaction, even if a small group of testers gives you very positive feedback.",
+      "That experience changed how I approached later projects. I became much more conscious of defining a manageable scope, getting a product into users' hands, and improving it based on their feedback.",
+    ],
+    results: [
+      "We had a working prototype that encouraged friends and family to become more active, but we kept adding features instead of releasing a smaller product and learning from a wider group of users. Outwalk was developed for iOS and Android; its product and store pages are linked below.",
     ],
     technologies: ["iOS", "Android", "Apple Watch", "Wear OS"],
     category: "Mobile Development",
@@ -231,15 +310,6 @@ export const projects: Project[] = [
     },
     imageCaption:
       "Cover based on the official app screen in an illustrative outdoor mockup",
-    gallery: [
-      {
-        src: "/images/outwalk-screen.jpg",
-        alt: "Outwalk step count and weekly leaderboard shown on a phone",
-        width: 1285,
-        height: 788,
-        caption: "Outwalk app screenshot",
-      },
-    ],
     features: [
       {
         title: "Built-in chat",
@@ -280,16 +350,6 @@ export const projects: Project[] = [
         image: {
           src: "/images/outwalk-feature-progress-transfer.png",
           alt: "Outwalk profile and progress screen",
-          width: 234,
-          height: 234,
-        },
-      },
-      {
-        title: "Health and 3D Touch",
-        description: "Use iOS Health integration and 3D Touch shortcuts.",
-        image: {
-          src: "/images/outwalk-feature-health-shortcuts.png",
-          alt: "Outwalk 3D Touch shortcuts on an iPhone",
           width: 234,
           height: 234,
         },
@@ -544,20 +604,30 @@ export const projects: Project[] = [
     year: "2025–now",
     shortDescription:
       "A smartphone app for recording eye movements alongside 3D head orientation.",
+    role: "Application developer and ML developer",
     longDescription: [
       "VideoNystagmoGraph To Go (VNGTG) is a demonstration app for capturing eye movements associated with nystagmus while recording head position and orientation. Its playback pairs eye video with a real-time 3D reconstruction of head movement.",
-      "The app supports separate profiles for saved recordings. A companion desktop viewer can preview the phone screen during recording on macOS or Windows, and the project site provides a printable headset model.",
-      "VNGTG is described by its publisher as an experimental demonstration prototype. It is not a medical device and is not intended for diagnosis or treatment.",
+      "The app supports separate profiles for saved recordings, which can be shared with colleagues for consultation. A companion desktop viewer can preview the phone screen during recording on macOS or Windows, and the project site provides a printable headset model.",
+      "A note from me: VNGTG is an experimental demonstration prototype. It is not a medical device and is not intended for diagnosis or treatment.",
+    ],
+    contribution: [
+      "I built the recording workflow: profiles, saving and loading videos, sharing recordings, and visualizations of head rotation and rotation speed. I also debugged issues with screen recording and streaming the phone's screen to other devices.",
+      "I used OpenCV to detect a person's eyes and automatically start recording when they were detected. I also took responsibility for communicating the technical details of integration issues to the third-party providers.",
+      "More recently, I began developing an ML component for analyzing eye movements, with the intention of integrating it into the application.",
+    ],
+    technicalChallenges: [
+      "Integrating third-party libraries for video streaming and screen recording was not always straightforward. Some problems required working directly with the providers to identify the cause and find a solution. I investigated the failures, explained what we were seeing, and proposed possible fixes as we worked through them together.",
     ],
     personalComments: [
       "VideoNystagmoGraph To Go was developed in association with Georgi Kukushev, MD.",
       "The project has also been presented in academic work related to innovations and new technologies in the diagnosis and management of vestibular disorders.",
-      "It gives medical professionals an easy way to make videonystagmography recordings of the eyes while simultaneously visualizing head movement and rotation. It can also display rotation speed. Multiple recordings can be created and organized under different patient profiles, and recordings can be shared with colleagues for consultation.",
-      "For me, this project was one of my big wishes coming true. I finally got the chance to work on software with a real medical application — software that can assist professionals in the assessment of vestibular disorders.",
-      "Technically, it was also a challenge. I had to integrate third-party libraries for things such as video streaming and screen recording, and those integrations didn't always work as expected. I was responsible for communicating technical issues with our third-party partners, explaining the problems we were encountering, and often proposing possible solutions.",
-      "And even beyond that, this project became my first professional experience with machine learning. I am currently working on an ML system related to eye movement analysis that is planned to be integrated into the application and released publicly.",
+      "Working on VNGTG gave me the opportunity to develop software in a field where I had no previous professional experience: medical applications. It fulfilled a long-standing wish to work on software that could support professionals studying vestibular disorders.",
+      "The project has also given me my first opportunity to work with machine learning in a professional setting. It has been valuable to bring together my application development experience and my growing knowledge of ML.",
     ],
-    technologies: ["ML", "3D visualization", "Desktop viewer"],
+    results: [
+      "The project site and demonstration video are available below. The eye-movement ML component remains in development and is intended for future integration into the application.",
+    ],
+    technologies: ["OpenCV", "ML", "3D visualization", "Desktop viewer"],
     category: "Mobile Development",
     liveUrl: "https://macropinch.com/vng/",
     image: {
@@ -723,21 +793,28 @@ export const projects: Project[] = [
   {
     title: "Balkan Journal of Philosophy — Journal Management System",
     slug: "balkan-journal-of-philosophy",
-    year: "2025-2026",
+    year: "2025–2026",
     shortDescription:
-      "An editorial system for online manuscript submissions to the Balkan Journal of Philosophy.",
+      "An editorial system for manuscript submission, peer review, decisions, and archiving at the Balkan Journal of Philosophy.",
+    role: "System designer and developer",
     longDescription: [
       "The Balkan Journal of Philosophy is a peer-reviewed academic journal published under the auspices of the Bulgarian Academy of Sciences. Its public website presents the journal, editorial policies, submission guidelines, and published issues.",
-      "The accompanying editorial system gives authors a place to create an account and submit manuscripts online. The journal directs new submissions through this system, connecting its public information site with the submission process.",
+      "The accompanying editorial system lets authors submit manuscripts online and supports the journal's workflow through editorial review, peer review, decisions, and archiving.",
+      "The system grew out of a conference management application I had developed for my Master's thesis at Sofia University. When the journal needed an editorial system, much of that earlier work could be adapted to its process.",
+    ],
+    contribution: [
+      "For my thesis, I worked with two professors from the Faculty of Mathematics and Informatics and **gathered feedback from 20 academics across six faculties**. I used their input to refine the requirements and build a working conference management application.",
+      "When the Balkan Journal of Philosophy needed an editorial system, I compared its requirements with the existing application and found that about 90% of the functionality overlapped. I adapted the system for manuscript submission, editorial and peer review, decisions, and archiving.",
+    ],
+    technicalChallenges: [
+      "The main engineering challenge was turning a conference management system into one that matched a journal's editorial workflow. I mapped the journal's stages against the existing functionality, retained what fit, and adapted the rest. The result was a working system for the journal rather than a separate build from scratch.",
     ],
     personalComments: [
-      "Balkan Journal of Philosophy is a peer-reviewed academic journal published under the auspices of the Bulgarian Academy of Sciences.",
-      "Before I was contacted by them, I had already created a Conference Management System as a project for my Master's thesis at Sofia University.",
-      "I had help from five professors at the Faculty of Mathematics and Informatics, and I also conducted a survey involving 20 professors and associate professors from six different faculties at Sofia University. I got some really useful feedback from them and adjusted the system requirements based on it.",
-      "Unfortunately, because of university bureaucracy, I couldn't get the system integrated for actual use at the university.",
-      "Later, I was connected with the Balkan Journal of Philosophy, which needed a management system of its own. Thankfully, there was about a 90% overlap in the functional requirements.",
-      "The result was an end-to-end journal management system that helps manage the whole process: submission → editor → reviewer → review → editor → author → deadlines → archive.",
-      "In the end, we finished the product, and my thesis didn't just end up sitting in some archive. It became something that is actually being used, and that still brings me joy.",
+      "The university never adopted the original conference management system, so I was especially glad when the journal gave the work a new purpose.",
+      "What started as an academic project became a system used by a real journal. Seeing the thesis prove useful beyond the university was satisfying, and working with real operational requirements gave me a chance to revisit and improve the application.",
+    ],
+    results: [
+      "The Balkan Journal of Philosophy uses the adapted system to manage its editorial process. The journal website and editorial system are linked below.",
     ],
     technologies: [],
     category: "Web Development",
