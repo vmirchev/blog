@@ -12,7 +12,7 @@ interface Props {
 const { post, previous, next } = Astro.props;
 const audioPosts = audioManifest.posts as Record<string, { fingerprint: string; file: string }>;
 const audio = audioPosts[post.id];
-const audioUrl = audio && `/audio/${audio.file}`;
+const audioUrl = audio && `/audio/${audio.file}?v=${audio.fingerprint}`;
 ---
 
 <BaseLayout

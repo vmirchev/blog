@@ -171,7 +171,7 @@ jobs:
           set net:timeout 20
           set sftp:connect-program "ssh -a -x -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           cd "$REMOTE_PATH"
-          mirror --reverse --verbose --no-perms ./dist/ .
-          mirror --reverse --delete --verbose --no-perms ./dist/audio/ audio
+          mirror --reverse --upload-older --verbose --no-perms ./dist/ .
+          mirror --reverse --upload-older --delete --verbose --no-perms ./dist/audio/ audio
           bye
           EOF
