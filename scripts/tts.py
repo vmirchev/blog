@@ -131,7 +131,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
     parser.add_argument("--name", default="blog_post_audio", help="Output basename")
-    parser.add_argument("--voice", default="af_heart")
+    parser.add_argument("--voice", default="am_puck")
     parser.add_argument(
         "--lang", choices=("a", "b", "e", "f", "h", "i", "p"), default="a",
         help="a=US English, b=UK English; other listed codes use espeak-ng",
@@ -159,7 +159,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     if not re.fullmatch(r"[A-Za-z0-9_-]+", args.name):
         parser.error("--name must contain only letters, digits, underscores, or hyphens")
     if not args.voice.startswith(args.lang):
-        parser.error("--voice prefix must match --lang (for example af_heart with --lang a)")
+        parser.error("--voice prefix must match --lang (for example am_puck with --lang a)")
     if not 0.5 <= args.speed <= 2.0:
         parser.error("--speed must be between 0.5 and 2.0")
     if not 0 <= args.pause <= 2:
