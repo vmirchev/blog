@@ -2,19 +2,19 @@
   "schema": 1,
   "posts": {
     "back-to-machine-learning-with-pytorch": {
-      "fingerprint": "ee63fef7d36c3eca8555adafb798b725dc69a3a369757a37a283c426e709b35a",
+      "fingerprint": "cb9776f1279afd81eaaaf90956c16990af25308fbd1e61c980b2cdaeab32a424",
       "file": "back-to-machine-learning-with-pytorch.mp3"
     },
     "learning-in-public-again": {
-      "fingerprint": "ae857006b1b388b5011b0dba9a584db262ea5670c83e0c64387394fc75f4e7d7",
+      "fingerprint": "e0524597f0eb22f848efab6cfba394ad2c0ec1b85f60a043d50d95df4b7deda6",
       "file": "learning-in-public-again.mp3"
     },
     "my-model-was-99-percent-confident-and-wrong": {
-      "fingerprint": "488ea28258743fff24ea3cc5620f14f4b409fd06648e4fb992166b9f40f38c03",
+      "fingerprint": "b2b185cd8d051cde62774f85eb5df06faed58750a4312b5753e77da56b9c0f48",
       "file": "my-model-was-99-percent-confident-and-wrong.mp3"
     },
     "what-95-percent-accuracy-didnt-tell-me-about-my-flower-classifier": {
-      "fingerprint": "8939e0f0532d2c0622b47402ebe0bc5d484f3842360f38c602edb1bbd8a2aa44",
+      "fingerprint": "39a21af1d426816b5d1be40550c89e205c2257cc6641d56593e0be956ac20bbd",
       "file": "what-95-percent-accuracy-didnt-tell-me-about-my-flower-classifier.mp3"
     }
   }
