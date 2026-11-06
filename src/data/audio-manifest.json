@@ -1,4 +1,21 @@
 {
   "schema": 1,
-  "posts": {}
+  "posts": {
+    "back-to-machine-learning-with-pytorch": {
+      "fingerprint": "ee63fef7d36c3eca8555adafb798b725dc69a3a369757a37a283c426e709b35a",
+      "file": "back-to-machine-learning-with-pytorch.mp3"
+    },
+    "learning-in-public-again": {
+      "fingerprint": "22049b23ebeef8ece0f4e4896f4a164948d7fbdd5ea87cd5d1798c4a8c373381",
+      "file": "learning-in-public-again.mp3"
+    },
+    "my-model-was-99-percent-confident-and-wrong": {
+      "fingerprint": "488ea28258743fff24ea3cc5620f14f4b409fd06648e4fb992166b9f40f38c03",
+      "file": "my-model-was-99-percent-confident-and-wrong.mp3"
+    },
+    "what-95-percent-accuracy-didnt-tell-me-about-my-flower-classifier": {
+      "fingerprint": "8939e0f0532d2c0622b47402ebe0bc5d484f3842360f38c602edb1bbd8a2aa44",
+      "file": "what-95-percent-accuracy-didnt-tell-me-about-my-flower-classifier.mp3"
+    }
+  }
 }
