@@ -53,6 +53,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: main
           persist-credentials: true
 
       - name: Check audio work
@@ -171,7 +172,6 @@ jobs:
           set sftp:connect-program "ssh -a -x -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           cd "$REMOTE_PATH"
           mirror --reverse --verbose --no-perms ./dist/ .
-          mkdir -p audio
-          mirror --reverse --delete --verbose --no-perms ./dist/audio/ audio/
+          mirror --reverse --delete --verbose --no-perms ./dist/audio/ audio
           bye
           EOF
