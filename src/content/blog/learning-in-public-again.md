@@ -62,7 +62,7 @@ In 2009, I got my first paid development job.
 
 The funny part is that the website is still online today, with almost the same desktop-era layout:
 
-[https://www.keytex-bg.com/](https://www.keytex-bg.com/)
+[https://www.keytex-bg.com/](https://www.keytex-bg.com/) <!-- tts:skip -->
 
 Behind it was a small custom CMS that allowed the owner to edit page content.
 
@@ -74,9 +74,7 @@ I made plenty of mistakes there.
 
 Thankfully, I had a very patient manager who gave me the opportunity to learn from them.
 
-I also got my first taste of mentoring. At one point, I was helping a junior front-end developer learn JavaScript and CSS while she was on maternity leave.
-
-I still remember cutting pieces of paper and moving them around on a desk to demonstrate how a web slider would behave if it existed in the physical world.
+I also got my first taste of mentoring while helping a junior front-end developer learn JavaScript and CSS. I still remember cutting pieces of paper and moving them around on a desk to demonstrate how a web slider would behave if it existed in the physical world.
 
 ## From web development to iOS
 
@@ -86,19 +84,13 @@ Eventually, in 2013, it led me to **MacroPinch**, where I managed to get hired a
 
 Once again, I had someone willing to take a chance on me.
 
-There I worked on several applications, including a new version of **Cardiograph**, which used the phone's camera to measure a person's heart rate.
+There I worked on several applications, including a redesigned version of **Cardiograph** with a new algorithm for measuring a person's heart rate using the phone's camera.
 
-I also worked on **Outwalk**, a social step-tracking application.
-
-Outwalk became especially important for me because my responsibilities went far beyond writing an iOS client.
-
-I built the backend that stored the data, connected users, and handled notifications. I worked on the iOS app. Because I was responsible for the backend and much of the product architecture, I ended up coordinating the Android development as well. I also brought in a friend from Web-Tourist to work on the UX, which made the project even more enjoyable.
-
-He is still an iOS developer today, which is pretty cool.
+I also worked on **Outwalk**, a social step-tracking application. Outwalk became especially important for me because my responsibilities went far beyond writing an iOS client. I built the backend that stored the data, connected users, and handled notifications. I worked on the iOS app. Because I was responsible for the backend and much of the product architecture, I ended up coordinating the Android development as well. I also brought in a friend from Web-Tourist to work on the UX, which made the project even more enjoyable.
 
 ## Finally making games
 
-Around 2017, the mobile-app business was changing. Advertising revenue was becoming less attractive, and the company started putting more resources into its game studio, **NoSxFive**.
+Around 2017, the mobile-app business was changing. Advertising revenue was becoming less attractive, and the company started putting more resources into its game studio, **No Six Five**.
 
 I was offered the opportunity to join.
 
@@ -116,7 +108,7 @@ So, more than ten years after registering on Web-Tourist because I wanted to lea
 
 And once again, the company gave me the time to learn game development properly.
 
-Since then, I've worked on six games as part of NoSxFive, two of which I developed largely on my own, and I've continued supporting the studio's other games as well.
+Since then, I've worked on six games as part of No Six Five, two of which I developed largely on my own, and I've continued supporting the studio's other games as well.
 
 ## Then came machine learning
 
