@@ -3,12 +3,16 @@ import BaseLayout from "./BaseLayout.astro";
 import Tag from "../components/Tag.astro";
 import { site } from "../config/site";
 import { formatDate, readingMinutes, type BlogPost } from "../lib/blog";
+import audioManifest from "../data/audio-manifest.json";
 interface Props {
   post: BlogPost;
   previous?: BlogPost;
   next?: BlogPost;
 }
 const { post, previous, next } = Astro.props;
+const audioPosts = audioManifest.posts as Record<string, { fingerprint: string; file: string }>;
+const audio = audioPosts[post.id];
+const audioUrl = audio && `/audio/${audio.file}`;
 ---
 
 <BaseLayout
@@ -23,6 +27,15 @@ const { post, previous, next } = Astro.props;
     <header class="article-header">
       <p class="eyebrow">Writing / {readingMinutes(post)} min read</p>
       <h1>{post.data.title}</h1>
+      {audioUrl && (
+        <div class="article-audio">
+          <p>Listen to this article</p>
+          <audio controls preload="metadata" aria-label={`Listen to ${post.data.title}`}>
+            <source src={audioUrl} type="audio/mpeg" />
+            <a href={audioUrl}>Download the audio narration</a>
+          </audio>
+        </div>
+      )}
       <p class="article-dek">{post.data.description}</p>
       <div class="article-dates">
         <time datetime={post.data.date.toISOString()}>

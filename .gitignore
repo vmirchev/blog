@@ -28,3 +28,5 @@ README.local.md
 
 # local template for app project pages
 PROJECT_PAGE_STRUCTURE.md
+/notebooks/
+/output/

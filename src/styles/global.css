@@ -710,6 +710,19 @@ img {
   font-size: clamp(2.8rem, 5vw, 5.2rem);
   margin: 0.8rem 0 1.1rem;
 }
+.article-audio {
+  max-width: 440px;
+  margin: 0 0 1.8rem;
+}
+.article-audio p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.article-audio audio {
+  display: block;
+  width: 100%;
+}
 .article-dek {
   font-size: 1.2rem;
   color: var(--muted);

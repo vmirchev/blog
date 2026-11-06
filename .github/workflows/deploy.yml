@@ -13,47 +13,29 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  site:
+  check:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      # Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      # Configure Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-
-      # Install dependencies
       - name: Install dependencies
         run: npm ci
-
-      # Validate Astro project
       - name: Check project
         run: npm run check
-
-      # Ensure production identity is configured
-      - name: Validate production identity
-        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
-        env:
-          SITE_NAME: ${{ secrets.SITE_NAME }}
-          SITE_EMAIL: ${{ secrets.SITE_EMAIL }}
-        run: |
-          test -n "$SITE_NAME"
-          test -n "$SITE_EMAIL"
-
-      # Generate static website
       - name: Build Astro site
         env:
-          SITE_NAME: ${{ (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch) && secrets.SITE_NAME || 'Portfolio Owner' }}
-          SITE_EMAIL: ${{ (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch) && secrets.SITE_EMAIL || 'hello@example.invalid' }}
+          SITE_NAME: Portfolio Owner
+          SITE_EMAIL: hello@example.invalid
         run: npm run build
-
-      # Save build output in GitHub Actions
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -61,16 +43,91 @@ jobs:
           path: dist/
           if-no-files-found: error
 
-      # Install SFTP client for production deployments
+  production:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Check audio work
+        id: audio
+        run: python3 scripts/tts.py --sync-blog --check-only --github-output
+
+      - name: Set up Python
+        if: steps.audio.outputs.needs_generation == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Kokoro CPU dependencies
+        if: steps.audio.outputs.needs_generation == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg libsndfile1
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install kokoro==0.9.4 soundfile
+
+      - name: Sync blog narration
+        if: steps.audio.outputs.needs_changes == 'true'
+        run: python3 scripts/tts.py --sync-blog
+
+      - name: Commit and push narration
+        if: steps.audio.outputs.needs_changes == 'true'
+        run: |
+          mkdir -p public/audio
+          git add -A -- public/audio src/data/audio-manifest.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update blog narration"
+            git push origin HEAD:main
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check project
+        run: npm run check
+
+      - name: Validate production identity
+        env:
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+          SITE_EMAIL: ${{ secrets.SITE_EMAIL }}
+        run: |
+          test -n "$SITE_NAME"
+          test -n "$SITE_EMAIL"
+
+      - name: Build Astro site
+        env:
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+          SITE_EMAIL: ${{ secrets.SITE_EMAIL }}
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-dist
+          path: dist/
+          if-no-files-found: error
+
       - name: Install SFTP client
-        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp
 
-      # Deploy production website
       - name: Deploy to Jump.bg
-        if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -105,7 +162,8 @@ jobs:
           chmod 600 "$HOME/.ssh/deploy_key"
           chmod 600 "$HOME/.ssh/known_hosts"
 
-          # Upload generated Astro files using SFTP
+          # Keep deletion confined to the remote audio directory.
+          mkdir -p dist/audio
           lftp -u "$SSH_USER," "sftp://$SSH_HOST:$SSH_PORT" <<EOF
           set cmd:fail-exit yes
           set net:max-retries 2
@@ -113,5 +171,7 @@ jobs:
           set sftp:connect-program "ssh -a -x -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
           cd "$REMOTE_PATH"
           mirror --reverse --verbose --no-perms ./dist/ .
+          mkdir -p audio
+          mirror --reverse --delete --verbose --no-perms ./dist/audio/ audio/
           bye
           EOF
