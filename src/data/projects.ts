@@ -841,15 +841,17 @@ export const projects: Project[] = [
   {
     title: "VMStudio",
     slug: "vmstudio",
-    year: 2023,
+    year: "2023–2026",
     shortDescription:
-      "A website presenting VMStudio's wellness, fitness, and massage services in Sofia.",
+      "The original website for VMStudio's wellness, fitness, and massage services in Sofia.",
     longDescription: [
-      "VMStudio is a family-run studio in Sofia focused on movement and physical wellbeing. Its website introduces the studio and its services, including yoga, ELDOA, TRX, XBody, and Thai massage.",
-      "Service pages and contact information give visitors a clear path from exploring an activity to getting in touch with the studio.",
+      "VMStudio is a family-run studio in Sofia focused on movement and physical wellbeing. The original website introduced the studio and its services, including yoga, ELDOA, TRX, XBody, and Thai massage.",
+      "Service pages and contact information gave visitors a clear path from exploring an activity to getting in touch with the studio.",
+      "In 2026, Milen replaced the original website with a modern AI-generated site.",
     ],
     personalComments: [
       "VM Studio is the studio created by my physiotherapist. I built this website as a small thank-you for helping me through my recovery.",
+      "Nowadays, Milen has used LLMs to build a modern website promoting his new Thai massage skills and has translated the page into English as well.",
       "A big shoutout to Milen @ VM Studio!",
     ],
     technologies: [],
@@ -857,12 +859,12 @@ export const projects: Project[] = [
     liveUrl: "https://vmstudio.bg/",
     image: {
       src: "/images/vmstudio-cover-v2.webp",
-      alt: "Actual VMStudio website screenshot displayed in a yoga studio setting",
+      alt: "Original VMStudio website screenshot displayed in a yoga studio setting",
       width: 1536,
       height: 1024,
     },
     imageCaption:
-      "The actual VMStudio website screenshot, presented in an illustrative yoga studio setting.",
+      "The original VMStudio website screenshot, presented in an illustrative yoga studio setting.",
     featured: false,
   },
   {
