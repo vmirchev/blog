@@ -719,6 +719,11 @@ img {
   font-size: 0.9rem;
   font-weight: 600;
 }
+.article-audio p a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .article-audio audio {
   display: block;
   width: 100%;
@@ -813,6 +818,19 @@ img {
 .prose img {
   max-width: 100%;
   height: auto;
+}
+.prose .article-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 1.6rem 0;
+  border: 0;
+  background: var(--surface-alt);
+}
+.prose audio {
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0;
 }
 .prose .article-figure {
   margin: 1.6rem 0;

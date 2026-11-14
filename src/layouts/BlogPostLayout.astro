@@ -29,7 +29,9 @@ const audioUrl = audio && `/audio/${audio.file}?v=${audio.fingerprint}`;
       <h1>{post.data.title}</h1>
       {audioUrl && (
         <div class="article-audio">
-          <p>Listen to this article</p>
+          <p>
+            Listen to this article | <a href="/blog/i-tried-giving-my-blog-my-own-voice-things-got-weird/">Learn how the audio was generated</a>
+          </p>
           <audio controls preload="metadata" aria-label={`Listen to ${post.data.title}`}>
             <source src={audioUrl} type="audio/mpeg" />
             <a href={audioUrl}>Download the audio narration</a>
