@@ -788,6 +788,10 @@ img {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.prose a.button-primary {
+  color: var(--background);
+  text-decoration: none;
+}
 .prose blockquote {
   margin: 2rem 0;
   padding: 0.3rem 1.5rem;

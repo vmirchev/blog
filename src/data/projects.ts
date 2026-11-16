@@ -45,6 +45,7 @@ export interface Project {
   technologies: string[];
   category: ProjectCategory;
   githubUrl?: string;
+  showSourceAfterOverview?: boolean;
   liveUrl?: string;
   links?: { label: string; url: string }[];
   image?: ProjectImage;
@@ -183,7 +184,8 @@ export const projects: Project[] = [
         alt: "Illustration of a PyTorch coding scene with a cat and lilies",
         width: 1448,
         height: 1086,
-        caption: "The project began with PyTorch and a question inspired by Misho.",
+        caption:
+          "The project began with PyTorch and a question inspired by Misho.",
         fit: "contain",
       },
       {
@@ -191,7 +193,8 @@ export const projects: Project[] = [
         alt: "Rose photo beside a Grad-CAM heatmap for the rose prediction",
         width: 1764,
         height: 904,
-        caption: "Grad-CAM highlights regions associated with a rose prediction.",
+        caption:
+          "Grad-CAM highlights regions associated with a rose prediction.",
         fit: "contain",
       },
       {
@@ -199,7 +202,8 @@ export const projects: Project[] = [
         alt: "Hippeastrum image beside Grad-CAM heatmaps for rose and Hippeastrum scores",
         width: 2576,
         height: 888,
-        caption: "Investigating a Hippeastrum the model misclassified as a rose.",
+        caption:
+          "Investigating a Hippeastrum the model misclassified as a rose.",
         fit: "contain",
       },
     ],
@@ -249,26 +253,49 @@ export const projects: Project[] = [
     slug: "ieee-cis-fraud-detection",
     year: 2026,
     shortDescription:
-      "Imbalanced fraud classification with missing-data analysis, metric selection, gradient boosting, and Optuna tuning.",
+      "A reproducible fraud modeling pipeline for 590,540 transactions, with chronological evaluation and a LightGBM model selected by PR-AUC.",
+    role: "Independent machine learning project",
     longDescription: [
-      "A fraud detection project built around the IEEE-CIS dataset.",
+      "The IEEE-CIS dataset combines transaction records with optional identity data. Fraud is rare, many values are missing, and the transactions occur over time. I used it to study how feature selection, evaluation, and decision thresholds affect a fraud classifier.",
+      "I began with five Colab notebooks, then moved the repeatable workflow into Kedro. The pipeline joins the source files, reduces memory use, selects features from the earlier 80% of transactions, builds time, amount, and missingness features, and compares models on the latest 20%.",
+    ],
+    contribution: [
+      "I changed feature selection after realizing that the early notebook experiments let later transactions influence which features were kept. The revised XGBoost selectors rank the anonymized V and ID feature groups using only the training period, then retain the smallest sets covering 95% of positive feature gain.",
+      "I compared logistic regression, random forest, LightGBM, and XGBoost in the regular Kedro pipeline, using PR-AUC as the main metric for the imbalanced target. I selected a decision threshold on an inner chronological slice of the training period, without using holdout labels. I also explored Optuna tuning in a separate notebook; it is not part of the reported model comparison.",
+      "I organized the process as Kedro pipelines with saved feature lists, models, predictions, metrics, and threshold reports. To reproduce the Colab comparison within my Mac's memory limit, I built a staged Linux Docker run that processes feature groups separately and runs each model branch in its own process.",
+    ],
+    technicalChallenges: [
+      "Feature selection differed between macOS and Colab even with the same input files, prepared feature matrix, split, seed, and tested Python package versions. The Linux Docker run reproduced Colab's exact lists of 229 V features and 28 ID features. The precise platform-level cause of the macOS difference remains unresolved, so I record the selected lists and environment alongside model scores.",
+      "The full-width pipeline exceeded a 7 GiB Docker memory limit. Narrower V and ID reads and restartable stages made the comparison runnable. The Docker profile omits logistic regression because its full-data fit still exceeded that limit; it compares random forest, LightGBM, and XGBoost.",
     ],
     personalComments: [
       "Working on the IEEE-CIS Fraud Detection dataset was actually a suggestion from ChatGPT, and it turned out to be a very good one.",
-      "The first thing it forced me to improve was my Exploratory Data Analysis. I had to move away from “let's look at everything” and focus on a more useful question: what information will actually affect my modeling decisions?",
-      "The dataset contains a large number of anonymized Vesta engineered features, many of which have a strong relationship with the target despite having no obvious meaning. It is also fairly large, with 590,540 rows, so working within the limits of the free Colab tier became part of the challenge. By downcasting numeric columns, I reduced the DataFrame's memory usage by 36.2%.",
-      "I also had to deal with severe class imbalance, missing data, and the question of whether missingness itself carried useful signal. Choosing the right evaluation metric was important as well, since accuracy would have been misleading for this task.",
-      "For modeling, I used smaller experiments to identify the most useful feature groups, then settled on a gradient boosting model. I wrapped the workflow into a pipeline and used Optuna to tune the hyperparameters.",
-      "Finally, I moved the project into Kedro with separate entry points for training and inference, so it ended as something structured with deployment in mind rather than just another notebook.",
+      "The first thing it forced me to improve was my exploratory data analysis. I had to move away from 'let's look at everything' and focus on a more useful question: what information will actually affect my modeling decisions?",
+      "The most useful lesson was to make each modeling decision traceable. Saving feature lists, predictions, and threshold reports made it possible to investigate surprising results instead of guessing which notebook cell had changed them.",
     ],
-    technologies: ["Kedro", "Optuna", "Gradient Boosting"],
+    results: [
+      "The completed Linux Docker run trained on 472,432 earlier transactions and evaluated on 118,108 later ones. LightGBM had the best holdout PR-AUC at 0.535803, narrowly ahead of XGBoost at 0.534329; random forest scored 0.432927. At the threshold of 0.79 chosen on inner validation data, LightGBM reached 0.613858 precision and 0.449065 recall on the holdout.",
+      "The holdout was inspected during development, so these scores compare the current candidates rather than estimate performance on an untouched future period. This is a reproducible model comparison, not a Kaggle test submission or a deployed fraud service.",
+      "The project source, Colab notebooks, reproduction guides, and tests are published on GitHub.",
+    ],
+    technologies: ["Python", "Kedro", "LightGBM", "XGBoost", "Optuna"],
     category: "Machine Learning",
+    githubUrl: "https://github.com/vmirchev/ieee-cis-fraud-detection",
+    showSourceAfterOverview: true,
+    links: [
+      {
+        label: "IEEE-CIS competition and dataset",
+        url: "https://www.kaggle.com/competitions/ieee-fraud-detection",
+      },
+    ],
     image: {
       src: "/images/ieee-cis-fraud-detection-cover.webp",
       alt: "Illustration of many legitimate transactions, a few fraud cases, and a tunable prediction threshold",
       width: 1536,
       height: 1024,
     },
+    imageCaption:
+      "Illustrative artwork; the project uses the IEEE-CIS dataset from Kaggle.",
     featured: false,
   },
   {

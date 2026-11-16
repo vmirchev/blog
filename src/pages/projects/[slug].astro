@@ -65,7 +65,8 @@ const hasPersonalComments = personalComments.length > 0;
         />
         {(project.imageCaption || project.links) && (
           <figcaption>
-            {project.imageCaption ?? "Screenshot from the developer’s official site"}
+            {project.imageCaption ??
+              "Screenshot from the developer’s official site"}
           </figcaption>
         )}
       </figure>
@@ -84,7 +85,8 @@ const hasPersonalComments = personalComments.length > 0;
             rel="noopener noreferrer"
           >
             {project.overviewLink.label}
-          </a>.
+          </a>
+          {"."}
         </p>
       )}
       {project.keyConcepts && (
@@ -98,6 +100,18 @@ const hasPersonalComments = personalComments.length > 0;
         </>
       )}
     </div>
+    {project.showSourceAfterOverview && project.githubUrl && (
+      <div class="detail-links">
+        <a
+          class="button-primary"
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View source on GitHub ↗
+        </a>
+      </div>
+    )}
     {project.contribution && project.contribution.length > 0 && (
       <section class="prose" aria-labelledby="project-contribution-title">
         <h2 id="project-contribution-title">My contribution</h2>
