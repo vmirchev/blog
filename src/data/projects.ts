@@ -1,4 +1,5 @@
 export type ProjectCategory =
+  | "AI Engineering"
   | "Machine Learning"
   | "Backend / Distributed Systems"
   | "Mobile Development"
@@ -131,14 +132,56 @@ export const projects: Project[] = [
     featured: false,
   },
   {
+    title: "PetSafe Plants",
+    slug: "petsafe-plants",
+    year: 2026,
+    shortDescription:
+      "A deployed AI app that investigates multi-plant photos with pretrained vision models and checks possible identities against pet toxicity references.",
+    role: "Independent developer",
+    longDescription: [
+      "PetSafe Plants is a deployed investigation app for photos that may contain several overlapping plants. My cat Misho's illness after drinking water from a vase of lilies inspired the project. The central challenge is examining the whole scene without overlooking a less obvious plant.",
+      "The app first asks Meta Muse Spark to assess the whole photo and report possible plant identities and uncertainty. When a closer look could help, Meta SAM 3.1 isolates selected plant regions and Muse Spark reassesses them. The app then matches candidate taxa against a local, source-backed reference database for cat and dog toxicity. The AI does not generate the toxicity classifications.",
+      "The live interface shows the investigation stages and extracted specimens. Visitors can upload a photo or try built-in sample scenes, including mixed bouquets and overlapping plants.",
+    ],
+    contribution: [
+      "I built the Python investigation pipeline and web interface for the Meta Global AI Developer Hackathon 2026. The workflow uses segmentation only when the scene calls for it, combines findings from the full image and selected regions, and keeps uncertain or unsupported identities unresolved.",
+      "I assembled a 101-entry plant reference database with separate cat and dog information, taxonomic qualifications, and links to veterinary sources. I also added streamed investigation events, result caching, API usage quotas, and an admin control to stop new model calls. The API key stays on the backend.",
+      "The repository includes tests, Docker setup, and notebooks documenting dataset exploration and model experiments. An optional DINOv3 classifier is available for comparison; the main live investigation uses Muse Spark and optional SAM instead.",
+    ],
+    technicalChallenges: [
+      "A scene may contain multiple plants with overlapping leaves and flowers. The workflow has to decide when a regional check is useful, filter duplicate segments, and preserve uncertainty when the photo does not support a confident identity.",
+      "Plant identification and toxicity lookup have different evidence requirements. I kept toxicity labels in a curated local reference rather than asking the model to invent them, and leave unmatched or insufficiently supported candidates unresolved.",
+    ],
+    results: [
+      "The application is deployed as a public demo, and its code, tests, reference data, and research notebooks are available on GitHub.",
+      "Visual identification can be wrong or incomplete, and a reference label of non-toxic does not guarantee safety. The app is an investigation aid, not veterinary advice. If exposure is suspected, contact a veterinarian.",
+    ],
+    technologies: ["Python", "Meta Muse Spark", "Meta SAM 3.1", "Docker"],
+    category: "AI Engineering",
+    githubUrl: "https://github.com/vmirchev/petsafe-plants",
+    liveUrl: "https://petsafe.vmirchev.com/",
+    youtubeVideoId: "nxvbmBTOXqY",
+    showSourceAfterOverview: true,
+    image: {
+      src: "/images/petsafe-plants-interface.png",
+      alt: "PetSafe Plants investigation of three potted plants with questions about identifying each plant",
+      width: 5334,
+      height: 3000,
+    },
+    imageCaption:
+      "Screenshot of the live PetSafe Plants investigation interface.",
+    featured: true,
+  },
+  {
     title: "PetalPaws",
     slug: "flower-image-classification",
     year: 2026,
     shortDescription:
-      "Inspired by my cat Misho, I’m building a flower classifier to help others recognize potentially dangerous plants before their pets are harmed.",
+      "A flower-classification ML project focused on PyTorch training, dataset quality, model evaluation, and understanding prediction errors.",
+    role: "Independent machine learning project",
     longDescription: [
-      "The idea began after my cat Misho became sick from drinking water beneath a lily pot. I want to help other pet owners recognize dangerous plants before their pets have the same experience.",
-      "The engineering focus is repeatable data preparation, meaningful evaluation, and a clear handoff between model training and inference.",
+      "PetalPaws studies the machine learning problem of recognizing flowers from images. I trained a PyTorch classifier, built a Gradio prototype, and used held-out data and my own photos to examine where its predictions fail.",
+      "My cat Misho's illness inspired the choice of subject. The work here centers on dataset preparation, training experiments, evaluation, and error analysis with tools such as Grad-CAM. Its model predicts flower classes; it does not classify plant toxicity.",
     ],
     overviewLink: {
       intro: "The original 16-class prototype is available as a",

@@ -17,7 +17,7 @@ const pickProjects = (slugs: string[]): Project[] =>
     .map((slug) => projectBySlug.get(slug))
     .filter((project): project is Project => project !== undefined);
 const mlProjects = pickProjects([
-  "flower-image-classification",
+  "petsafe-plants",
   "ml-from-scratch",
   "ieee-cis-fraud-detection",
 ]);
@@ -94,7 +94,7 @@ const skillGroups = [
         </p>
         <div class="home-hero-actions">
           <a class="button-primary" href="#machine-learning">
-            View ML Projects <span aria-hidden="true">↗</span>
+            View AI &amp; ML Projects <span aria-hidden="true">↗</span>
           </a>
           <a
             class="home-hero-secondary"
@@ -180,14 +180,15 @@ const skillGroups = [
 
     <Section
       id="machine-learning"
-      eyebrow="Current focus / Machine Learning"
-      title="Selected Machine Learning Projects"
+      eyebrow="Current focus / AI & Machine Learning"
+      title="Selected AI & Machine Learning Projects"
       linkHref="/projects/"
       linkLabel="All projects"
     >
       <p class="home-section-intro">
         Practical work across model development, evaluation, and inference —
-        from image classification to neural networks and fraud detection.
+        from image classification and plant investigation to neural networks and
+        fraud detection.
       </p>
       <div class="card-grid home-project-grid home-ml-grid">
         {mlProjects.map((project) => (
